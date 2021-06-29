@@ -17,7 +17,7 @@ public class Usuario {
     @NotNull
     @NotEmpty
     @Email
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String login;
     @NotNull
     @NotEmpty

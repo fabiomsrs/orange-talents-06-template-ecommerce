@@ -1,6 +1,7 @@
 package br.com.zupacademy.fabiano.mercadolivre.dto;
 
 import br.com.zupacademy.fabiano.mercadolivre.modelo.Usuario;
+import br.com.zupacademy.fabiano.mercadolivre.validator.ValorUnico;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.constraints.*;
@@ -9,6 +10,7 @@ public class UsuarioRegisterDto {
     @NotNull
     @NotEmpty
     @Email
+    @ValorUnico(field = "login", instanceClass = Usuario.class)
     private String login;
     @NotNull
     @NotEmpty
