@@ -36,6 +36,8 @@ public class Produto {
     @NotNull
     @ManyToOne
     private Categoria categoria;
+    @ManyToOne
+    private Usuario dono;
     @CreationTimestamp
     private LocalDateTime createdAt;
 
@@ -47,13 +49,15 @@ public class Produto {
                    @NotNull @Min(value = 0) Integer quantidadeDisponivel,
                    @Size(min = 3) Map<String, String> caracteristicas,
                    @NotNull @NotEmpty @Length(max = 400) String descricao,
-                   @NotNull Categoria categoria) {
+                   @NotNull Categoria categoria,
+                   Usuario usuario) {
         this.nome = nome;
         this.valor = valor;
         this.quantidadeDisponivel = quantidadeDisponivel;
         this.caracteristicas = caracteristicas;
         this.descricao = descricao;
         this.categoria = categoria;
+        this.dono = usuario;
     }
 
     public Long getId() {
@@ -82,6 +86,10 @@ public class Produto {
 
     public Categoria getCategoria() {
         return categoria;
+    }
+
+    public Usuario getDono() {
+        return dono;
     }
 
     public LocalDateTime getCreatedAt() {

@@ -2,6 +2,7 @@ package br.com.zupacademy.fabiano.mercadolivre.dto;
 
 import br.com.zupacademy.fabiano.mercadolivre.modelo.Categoria;
 import br.com.zupacademy.fabiano.mercadolivre.modelo.Produto;
+import br.com.zupacademy.fabiano.mercadolivre.modelo.Usuario;
 import br.com.zupacademy.fabiano.mercadolivre.repository.CategoriaRepository;
 import br.com.zupacademy.fabiano.mercadolivre.validator.ChecaExistencia;
 import org.hibernate.validator.constraints.Length;
@@ -70,7 +71,7 @@ public class ProdutoDto {
         return categoria;
     }
 
-    public Produto converter(CategoriaRepository repository) {
+    public Produto converter(CategoriaRepository repository, Usuario usuario) {
         Categoria categoria = repository.findById(this.categoria).get();
         return new Produto(
                 this.nome,
@@ -78,7 +79,8 @@ public class ProdutoDto {
                 this.quantidadeDisponivel,
                 this.caracteristicas,
                 this.descricao,
-                categoria
+                categoria,
+                usuario
         );
     }
 }
