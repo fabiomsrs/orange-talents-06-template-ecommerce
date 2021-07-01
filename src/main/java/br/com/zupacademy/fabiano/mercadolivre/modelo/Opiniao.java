@@ -51,6 +51,10 @@ public class Opiniao {
         return id;
     }
 
+    public Integer getNota() {
+        return nota;
+    }
+
     public String getTitulo() {
         return titulo;
     }

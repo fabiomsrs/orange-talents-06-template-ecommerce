@@ -1,9 +1,6 @@
 package br.com.zupacademy.fabiano.mercadolivre.controller;
 
-import br.com.zupacademy.fabiano.mercadolivre.dto.ImagemDto;
-import br.com.zupacademy.fabiano.mercadolivre.dto.OpiniaoDto;
-import br.com.zupacademy.fabiano.mercadolivre.dto.PerguntaDto;
-import br.com.zupacademy.fabiano.mercadolivre.dto.ProdutoDto;
+import br.com.zupacademy.fabiano.mercadolivre.dto.*;
 import br.com.zupacademy.fabiano.mercadolivre.modelo.Opiniao;
 import br.com.zupacademy.fabiano.mercadolivre.modelo.Pergunta;
 import br.com.zupacademy.fabiano.mercadolivre.modelo.Produto;
@@ -52,6 +49,17 @@ public class ProdutoController {
         Produto produto = dto.converter(categoriaRepository, usuario);
         repository.save(produto);
         return ResponseEntity.ok(produto);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProdutoDetalheDto> detalheProduto(@PathVariable("id") Long id){
+        Optional<Produto> optionalProduto = repository.findById(id);
+
+        if(optionalProduto.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(new ProdutoDetalheDto(optionalProduto.get()));
     }
 
     @PostMapping("/{id}/imagens")

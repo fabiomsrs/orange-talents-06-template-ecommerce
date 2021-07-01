@@ -15,6 +15,10 @@ public class PerguntaDto {
     public PerguntaDto() {
     }
 
+    public PerguntaDto(Pergunta pergunta) {
+        this.titulo = pergunta.getTitulo();
+    }
+
     public PerguntaDto(String titulo) {
         this.titulo = titulo;
     }

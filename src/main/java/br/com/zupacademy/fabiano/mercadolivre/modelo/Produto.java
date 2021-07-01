@@ -7,9 +7,11 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class Produto {
@@ -45,6 +47,10 @@ public class Produto {
     private LocalDateTime createdAt;
     @ElementCollection
     List<String> imagens;
+    @OneToMany(mappedBy = "produto")
+    private Set<Opiniao> opinioes = new HashSet<>();
+    @OneToMany(mappedBy = "produto")
+    private Set<Pergunta> perguntas = new HashSet<>();
 
     public Produto() {
     }
@@ -99,6 +105,27 @@ public class Produto {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public List<String> getImagens() {
+        return imagens;
+    }
+
+    public Set<Pergunta> getPerguntas() {
+        return perguntas;
+    }
+
+    public Set<Opiniao> getOpinioes() {
+        return opinioes;
+    }
+
+    public Integer getTotalOpinioes(){
+        return this.opinioes.size();
+    }
+
+    public Double getMediaNotas(){
+        Integer soma =  this.opinioes.stream().map(Opiniao::getNota).collect(Collectors.summingInt(i->i));
+        return Double.valueOf(soma / this.getTotalOpinioes());
     }
 
     public void adicionarImagens(Set<String> links) {
