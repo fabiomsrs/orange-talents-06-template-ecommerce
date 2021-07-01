@@ -1,10 +1,13 @@
 package br.com.zupacademy.fabiano.mercadolivre.controller;
 
 import br.com.zupacademy.fabiano.mercadolivre.dto.ImagemDto;
+import br.com.zupacademy.fabiano.mercadolivre.dto.OpiniaoDto;
 import br.com.zupacademy.fabiano.mercadolivre.dto.ProdutoDto;
+import br.com.zupacademy.fabiano.mercadolivre.modelo.Opiniao;
 import br.com.zupacademy.fabiano.mercadolivre.modelo.Produto;
 import br.com.zupacademy.fabiano.mercadolivre.modelo.Usuario;
 import br.com.zupacademy.fabiano.mercadolivre.repository.CategoriaRepository;
+import br.com.zupacademy.fabiano.mercadolivre.repository.OpiniaoRepository;
 import br.com.zupacademy.fabiano.mercadolivre.repository.ProdutoRepository;
 import br.com.zupacademy.fabiano.mercadolivre.utils.Bucket;
 import br.com.zupacademy.fabiano.mercadolivre.utils.Uploader;
@@ -27,6 +30,9 @@ public class ProdutoController {
 
     @Autowired
     CategoriaRepository categoriaRepository;
+
+    @Autowired
+    OpiniaoRepository opiniaoRepository;
 
     @Autowired
     Uploader bucket;
@@ -58,5 +64,17 @@ public class ProdutoController {
         produto.adicionarImagens(links);
         repository.save(produto);
         return ResponseEntity.ok(links);
+    }
+
+    @PostMapping("/{id}/opinioes")
+    public ResponseEntity<?> opiniao(@PathVariable("id") Long id, @RequestBody @Valid OpiniaoDto dto){
+        Usuario usuario = (Usuario)  SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Optional<Produto> optionalProduto = repository.findById(id);
+        if(optionalProduto.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+        Opiniao opiniao = dto.converter(usuario, optionalProduto.get());
+        opiniaoRepository.save(opiniao);
+        return ResponseEntity.ok(opiniao);
     }
 }
