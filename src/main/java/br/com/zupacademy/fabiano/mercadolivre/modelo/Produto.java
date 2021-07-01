@@ -2,11 +2,14 @@ package br.com.zupacademy.fabiano.mercadolivre.modelo;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Entity
 public class Produto {
@@ -40,6 +43,8 @@ public class Produto {
     private Usuario dono;
     @CreationTimestamp
     private LocalDateTime createdAt;
+    @ElementCollection
+    List<String> imagens;
 
     public Produto() {
     }
@@ -94,5 +99,13 @@ public class Produto {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public void adicionarImagens(Set<String> links) {
+        this.imagens.addAll(links);
+    }
+
+    public boolean pertence(Usuario usuario) {
+        return usuario.getId() == this.dono.getId();
     }
 }
