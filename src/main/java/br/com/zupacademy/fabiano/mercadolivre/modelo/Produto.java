@@ -135,4 +135,12 @@ public class Produto {
     public boolean pertence(Usuario usuario) {
         return usuario.getId() == this.dono.getId();
     }
+
+    public boolean abaterCompra(Integer quantidade){
+        if(this.quantidadeDisponivel >= quantidade){
+            this.quantidadeDisponivel -= quantidade;
+            return true;
+        }
+        return false;
+    }
 }
