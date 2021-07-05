@@ -9,7 +9,6 @@ import br.com.zupacademy.fabiano.mercadolivre.repository.CategoriaRepository;
 import br.com.zupacademy.fabiano.mercadolivre.repository.OpiniaoRepository;
 import br.com.zupacademy.fabiano.mercadolivre.repository.PerguntaRepository;
 import br.com.zupacademy.fabiano.mercadolivre.repository.ProdutoRepository;
-import br.com.zupacademy.fabiano.mercadolivre.utils.Bucket;
 import br.com.zupacademy.fabiano.mercadolivre.utils.EnviadorEmail;
 import br.com.zupacademy.fabiano.mercadolivre.utils.Uploader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,7 +103,7 @@ public class ProdutoController {
         }
         Pergunta pergunta = dto.converter(usuario, optionalProduto.get());
         perguntaRepository.save(pergunta);
-        sendGrid.enviaEmail(usuario);
+        sendGrid.enviaEmail("email enviado para: " + usuario.getLogin());
         return ResponseEntity.ok(pergunta);
     }
 }

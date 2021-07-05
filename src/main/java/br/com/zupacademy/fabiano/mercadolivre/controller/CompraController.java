@@ -38,7 +38,7 @@ public class CompraController {
             Compra compra = dto.converter(produtoRepository, usuario);
             repository.save(compra);
 
-            sendGrid.enviaEmail(usuario);
+            sendGrid.enviaEmail("email enviado para: " + usuario.getLogin());
             return ResponseEntity.status(HttpStatus.FOUND).body(compra.getGatewayPagamento().getUrl(compra.getId()));
         }
 

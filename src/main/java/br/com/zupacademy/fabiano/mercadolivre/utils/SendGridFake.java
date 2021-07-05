@@ -1,15 +1,14 @@
 package br.com.zupacademy.fabiano.mercadolivre.utils;
 
-import br.com.zupacademy.fabiano.mercadolivre.modelo.Usuario;
 import org.springframework.stereotype.Component;
 
 @Component
 public class SendGridFake implements EnviadorEmail{
     @Override
-    public void enviaEmail(Usuario usuario) {
+    public void enviaEmail(String msg) {
         /*
-        Envia email pro login do usuario
+        Envia email
         * */
-        System.out.println("Email enviado para " + usuario.getLogin());
+        System.out.println(msg);
     }
 }
