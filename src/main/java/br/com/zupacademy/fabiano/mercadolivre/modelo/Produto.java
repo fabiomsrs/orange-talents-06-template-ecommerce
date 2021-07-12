@@ -125,7 +125,10 @@ public class Produto {
 
     public Double getMediaNotas(){
         Integer soma =  this.opinioes.stream().map(Opiniao::getNota).collect(Collectors.summingInt(i->i));
-        return Double.valueOf(soma / this.getTotalOpinioes());
+        if(soma>0){
+            return Double.valueOf(soma) / Double.valueOf(this.getTotalOpinioes());
+        }
+        return Double.valueOf(0);
     }
 
     public void adicionarImagens(Set<String> links) {
